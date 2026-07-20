@@ -674,12 +674,22 @@
 
             // Rendu des ingrédients
             const ingContainer = document.getElementById('ingredient-filters');
-            // Tri par ordre alphabétique pour faire joli
-            Array.from(allIngredients).sort().forEach(ing => {
+            const sortedIngredients = Array.from(allIngredients).sort();
+
+            const LIMIT_VISIBLE = 12; // Nombre max d'ingrédients affichés par défaut
+            
+            sortedIngredients.forEach((ing, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn ing-btn';
                 btn.textContent = ing;
                 btn.dataset.ingredient = ing;
+
+                // Si on dépasse la limite, on cache l'ingrédient au départ
+                if (index >= LIMIT_VISIBLE) {
+                    btn.style.display = 'none';
+                    btn.classList.add('hidden-ingredient');
+                }
+
                 btn.addEventListener('click', () => {
                     // Toggle l'ingrédient
                     if (activeIngredients.has(ing)) {
@@ -693,6 +703,37 @@
                 });
                 ingContainer.appendChild(btn);
             });
+
+            // Si le nombre total d'ingrédients dépasse notre limite, on crée le bouton magique
+            if (sortedIngredients.length > LIMIT_VISIBLE) {
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = 'filter-btn';
+                
+                // Style personnalisé pour démarquer le bouton "Voir plus" (Couleur bordeaux)
+                toggleBtn.style.color = 'var(--accent-color)';
+                toggleBtn.style.borderColor = 'var(--accent-color)';
+                toggleBtn.style.fontWeight = 'bold';
+                toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Voir plus';
+
+                let isExpanded = false;
+                
+                toggleBtn.addEventListener('click', () => {
+                    isExpanded = !isExpanded;
+                    
+                    // On récupère tous les boutons masqués pour changer leur affichage
+                    const hiddenBtns = ingContainer.querySelectorAll('.hidden-ingredient');
+                    hiddenBtns.forEach(btn => {
+                        btn.style.display = isExpanded ? 'inline-block' : 'none';
+                    });
+
+                    // On met à jour l'intitulé et la flèche du bouton
+                    toggleBtn.innerHTML = isExpanded 
+                        ? '<i class="fa-solid fa-chevron-up"></i> Voir moins' 
+                        : '<i class="fa-solid fa-chevron-down"></i> Voir plus';
+                });
+
+                ingContainer.appendChild(toggleBtn);
+            }
         }
 
         // 3. Affichage des recettes filtrées
