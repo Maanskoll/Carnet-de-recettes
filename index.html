@@ -686,6 +686,23 @@
                     "Beurrer les parties extérieures du pain et assembler le tout.",
                     "Chauffer une poêle beurrée, et faire dorer pendant 3 à 5min (le temps que le fromage fonde légèrement)."
                 ]
+            },
+            {
+                id: 10,
+                title: "xxxx",
+                category: "?",
+                time: "Indéfini",
+                image: "https://os.md/SBQN.jpg",
+                isSecret: true,
+                password: "1307",
+                description: "....",
+                tags: ["Vide"],
+                ingredients: [
+                    "Le bonheur"
+                ],
+                steps: [
+                    "A chercher."
+                ]
             }
         ];
 
@@ -853,6 +870,15 @@
         const closeModalBtn = document.getElementById('close-modal');
 
         function openRecipeModal(recipe) {
+            //Vérification du mdp
+            if (recipe.isSecret){
+                const inputPassword = prompt("Autorisation ?");
+
+                if (inputPassword !== recipe.password) {
+                    alert("Non, ce n'est pas bon.");
+                    return; // stop de la fonctionnalité
+                }
+            }
             // Remplir les données
             document.getElementById('modal-title').textContent = recipe.title;
             document.getElementById('modal-category').innerHTML = `<i class="fa-solid fa-tag"></i> ${recipe.category}`;
