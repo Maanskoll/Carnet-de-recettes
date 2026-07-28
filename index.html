@@ -387,6 +387,18 @@
             font-size: 0.9rem;
         }
 
+        /* NOUVEAU STYLE : Pour les liens vers d'autres recettes */
+        .recipe-link {
+            color: var(--accent-color);
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .recipe-link:hover {
+            color: var(--secondary-accent);
+        }
+
         /* Responsive pour petits écrans */
         @media (max-width: 768px) {
             .book-container {
@@ -668,10 +680,11 @@
                     "Un gros pain tranché (de préférence 14mm)",
                     "Jambon blanc",
                     "Beurre",
+                    "<span class='recipe-link' onclick='openRecipeById(\"C11\")'>Sauce béchamel</span>",
                     "Fromage au choix (personnellement c'est du comté ou emmental)"
                 ],
                 steps: [
-                    "Préparer la sauce béchamel en amont (recette à venir).",
+                    "Préparer la <span class='recipe-link' onclick='openRecipeById(\"C11\")'>sauce béchamel</span>.",
                     "Sur une tranche de pain, appliquer le jambon et des fines lamelles de fromage, ainsi que la béchamel.",
                     "Beurrer les parties extérieures du pain et assembler le tout.",
                     "Chauffer une poêle beurrée, et faire dorer pendant 3 à 5min (le temps que le fromage fonde légèrement)."
@@ -683,11 +696,11 @@
                 category: "Plat rapide",
                 time: "1h",
                 image: "https://os.md/R7Y7XTF3UTUD.jpg",
-                description: "Plat de chez picard mais pas surgelé",
+                description: "Plat de chez picard mais pas surgelé.",
                 tags: ["Béchamel", "Jambon"],
                 ingredients: [
                     "Pour environs 6 crêpes : 125g de farine, 2 œufs, 250ml de lait, sel",
-                    "Béchamel (se référer la fiche recette béchamel)",
+                    "<span class='recipe-link' onclick='openRecipeById(\"C11\")'>Sauce béchamel</span>",
                     "Jambon, dès de jambon si tu as la flemme de couper en morceaux",
                     "Fromage au choix à mettre dans la béchamel : comté, emmental,..."
                 ],
@@ -699,7 +712,7 @@
                 ]
             },
             {
-                id: 11,
+                id: "C11",
                 title: "Béchamel",
                 category: "Sauce",
                 time: "15 à 20min",
@@ -926,6 +939,14 @@
             });
         }
 
+         // --- NOUVELLE FONCTION ---
+        window.openRecipeById = function(id) {
+            const recipe = recipes.find(r => r.id === id);
+            if (recipe) {
+                openRecipeModal(recipe);
+            }
+        };
+
         // 4. Gestion de la Modale (Livre ouvert)
         const modal = document.getElementById('recipe-modal');
         const closeModalBtn = document.getElementById('close-modal');
@@ -945,9 +966,11 @@
             document.getElementById('modal-category').innerHTML = `<i class="fa-solid fa-tag"></i> ${recipe.category}`;
             document.getElementById('modal-time').innerHTML = `<i class="fa-regular fa-clock"></i> ${recipe.time}`;
             document.getElementById('modal-image').src = recipe.image;
-            document.getElementById('modal-desc').textContent = recipe.description;
 
-            // Remplir les listes
+            // On utilise innerHTML ici pour permettre l'insertion de liens HTML
+            document.getElementById('modal-desc').innerHTML = recipe.description;
+
+            // Remplir les listes avec innner
             const ulIngredients = document.getElementById('modal-ingredients');
             ulIngredients.innerHTML = recipe.ingredients.map(ing => `<li>${ing}</li>`).join('');
 
