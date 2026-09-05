@@ -455,6 +455,19 @@
             padding: 0 20px 20px 20px;
             text-align: center;
         }
+
+        /* ==========================================================================
+           WIDGET SPOTIFY FLOTTANT
+           ========================================================================== */
+        .spotify-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px; /* Reste collé en bas à droite quand on scrolle */
+            width: 300px; /* Largeur du mini-lecteur */
+            z-index: 1000; /* S'assure qu'il passe au-dessus du reste */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -462,7 +475,7 @@
     <div class="app-container">
         <header>
             <h1>Carnet de Recettes Salées</h1>
-            <p>Parce que je veux crééer quelque chose de sympa (va en bas pour tes idées)</p>
+            <p> Sois fière (va en bas pour tes idées)</p>
         </header>
 
         <!-- Filtres Interactifs -->
@@ -1214,5 +1227,9 @@
         window.onload = initApp;
 
     </script>
+    <!-- MINI LECTEUR SPOTIFY FLOTTANT -->
+        <div class="spotify-widget">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1wv2nS4ufTtV0YKrKqMO4z?utm_source=generator&si=d8c5cb102c0e482b" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
 </body>
 </html>
