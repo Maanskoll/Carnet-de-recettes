@@ -418,6 +418,43 @@
                 border-bottom: 1px solid var(--border-color);
             }
         }
+        /* ==========================================================================
+           SECTION BOÎTE À IDÉES (GOOGLE FORM)
+           ========================================================================== */
+        .idea-section {
+            background-color: var(--paper-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 40px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .idea-toggle {
+            padding: 15px 20px;
+            font-family: var(--font-title);
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            list-style: none; /* Masque la flèche par défaut sur certains navigateurs */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+        }
+
+        .idea-toggle::-webkit-details-marker {
+            display: none; /* Masque la flèche Safari/Chrome */
+        }
+
+        .idea-toggle:hover {
+            background-color: rgba(128, 0, 32, 0.05);
+        }
+
+        .idea-content {
+            padding: 0 20px 20px 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -425,7 +462,7 @@
     <div class="app-container">
         <header>
             <h1>Carnet de Recettes Salées</h1>
-            <p>Parce que je veux partager avec ceux que j'aime (et faire un truc de dingue aussi soyons honnête)</p>
+            <p>Parce que je veux crééer quelque chose de sympa (va en bas pour tes idées)</p>
         </header>
 
         <!-- Filtres Interactifs -->
@@ -450,6 +487,21 @@
         <main class="recipe-grid" id="recipe-grid">
             <!-- Les recettes seront injectées ici par JavaScript -->
         </main>
+        <!-- BOÎTE À IDÉES DÉPLIANTE -->
+        <details class="idea-section">
+            <summary class="idea-toggle">
+                <i class="fa-regular fa-lightbulb"></i> Une idée de recette à proposer ?
+            </summary>
+            
+            <div class="idea-content">
+                <p class="idea-desc">Partage tes idées !</p>
+                <div class="google-form-container">
+                    <!-- Ton lien Google Form -->
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSevllI3UC7KzmB9aR1UUYouqy5uvn7Gw_xwhKm2ekcWCnqNFw/viewform?embedded=true" width="100%" height="380" frameborder="0">Chargement…</iframe>
+                </div>
+            </div>
+        </details>
+        <!-- FIN DU NOUVEAU BLOC -->
     </div>
 
     <!-- Modale "Livre Ouvert" pour lire une recette -->
